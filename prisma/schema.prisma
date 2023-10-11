@@ -65,6 +65,27 @@ model Post {
   comments       Comment[]
 }
 
+model Category {
+  id              BigInt         @id @default(autoincrement())
+  parentId        BigInt?
+  title           String         @db.VarChar(75)
+  metaTitle       String         @db.VarChar(100)
+  slug            String         @db.VarChar(100)
+  content         String         @db.Text
+  parentCategory  Category?      @relation("CategoriesToCategories", fields: [parentId], references: [id])
+  childCategories Category[]     @relation("CategoriesToCategories")
+  postCategories  PostCategory[]
+}
+
+model PostCategory {
+  postid     BigInt
+  categoryId BigInt
+  post       Post     @relation(fields: [postid], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@id([postid, categoryId])
+}
+
 model Comment {
   id            BigInt    @id @default(autoincrement())
   postId        BigInt
@@ -85,25 +106,4 @@ model PostMeta {
   key     String @db.VarChar(50)
   content String @db.Text
   post    Post   @relation(fields: [postId], references: [id])
-}
-
-model Category {
-  id              BigInt         @id @default(autoincrement())
-  parentId        BigInt?
-  title           String         @db.VarChar(75)
-  metaTitle       String         @db.VarChar(100)
-  slug            String         @db.VarChar(100)
-  content         String         @db.Text
-  parentCategory  Category?      @relation("CategoriesToCategories", fields: [parentId], references: [id])
-  childCategories Category[]     @relation("CategoriesToCategories")
-  postCategories  PostCategory[]
-}
-
-model PostCategory {
-  postid     BigInt
-  categoryId BigInt
-  post       Post     @relation(fields: [postid], references: [id])
-  category   Category @relation(fields: [categoryId], references: [id])
-
-  @@id([postid, categoryId])
 }

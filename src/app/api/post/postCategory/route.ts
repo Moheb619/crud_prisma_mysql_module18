@@ -51,10 +51,16 @@ export async function PUT(req: Request) {
   try {
     const body = await req.json();
     const { searchParams } = new URL(req.url);
-    const postCategoryId = searchParams.get("id");
+    const postId = searchParams.get("postid");
+    const categoryId = searchParams.get("categoryid");
     const updatedPostCategory = await prisma.postCategory.update({
-      where: { id: Number(postCategoryId) },
-      data: body, // Make sure req.body contains the fields to update
+      where: {
+        postid_categoryId: {
+          postid: Number(postId),
+          categoryId: Number(categoryId),
+        },
+      },
+      data: body,
     });
     return new NextResponse(
       JSON.stringify({
@@ -77,9 +83,15 @@ export async function PUT(req: Request) {
 export async function DELETE(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
-    const postCategoryId = searchParams.get("id");
+    const postId = searchParams.get("postid");
+    const categoryId = searchParams.get("categoryid");
     const deletedPostCategory = await prisma.postCategory.delete({
-      where: { id: Number(postCategoryId) },
+      where: {
+        postid_categoryId: {
+          postid: Number(postId),
+          categoryId: Number(categoryId),
+        },
+      },
     });
     return new NextResponse(
       JSON.stringify({
