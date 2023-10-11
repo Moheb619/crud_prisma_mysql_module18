@@ -1,0 +1,138 @@
+I want to act you as Nextjs , Prisma , MySql Web Developer. I will provide you the Entity Relation diagram and their attribues with questions. You will give me code according the questions. 
+
+# Database Tables:
+
+user
+id BIGINT (20)
+firstName VARCHAR(50)
+middleName VARCHAR(50)
+lastName VARCHAR(50)
+mobile VARCHAR(15)
+email VARCHAR(50)
+passwordHash VARCHAR(32)
+registered At DATETIME
+lastLogin DATETIME
+intro TINYTEXT
+profile TEXT
+Indexes
+
+
+tag
+id BIGINT (20)
+title VARCHAR(75)
+metaTitle VARCHAR(100)
+slug VARCHAR(100)
+content TEXT
+Indexes
+
+
+post_tag 
+postid BIGINT (20) 
+tagId BIGINT(20) 
+Indexes
+
+
+post
+id BIGINT (20)
+authorId BIGINT(20)
+parentId BIGINT (20)
+title VARCHAR(75) 
+metaTitle VARCHAR(100) 
+slug VARCHAR(100) 
+summary TINYTEXT 
+published TINYINT (1)
+createdAt DATETIME 
+updatedAt DATETIME
+publishedAt DATETIME
+content TEXT
+Indexes
+
+
+post_comment 
+id BIGINT (20)
+postId BIGINT(20) 
+parentId BIGINT (20)
+title VARCHAR(100) 
+published TINYINT (1)
+createdAt DATETIME
+publishedAt DATETIME
+content TEXT
+Indexes
+
+post_category
+postid BIGINT(20)
+categoryId BIGINT(20) 
+Indexes
+
+post_meta 
+id BIGINT (20)
+postId BIGINT(20)
+key VARCHAR(50)
+content TEXT
+Indexes
+
+category 
+id BIGINT (20)
+parentId BIGINT (20)
+title VARCHAR(75)
+metaTitle VARCHAR(100)
+slug VARCHAR(100)
+content TEXT
+Indexes
+
+
+# Table's Relation:
+
+user:
+weak one to many with post
+
+tag:
+one to many with post_tag
+
+post
+one to many with post
+weak one to many with post_comment
+one to many with post_tag
+weak one to many with post_meta
+one to many with post_category
+
+post_comment
+weak one to many with post_comment
+
+category
+weak one to many with category
+one to many with post_category
+
+
+
+Requirements: Complete the following Requirements in nextjs using prisma and mysql.
+
+
+
+CRUD operation using user model.
+
+
+CRUD operation using post model.
+
+
+CRUD operation using post_comment model.
+
+
+CRUD operation using tag model.
+
+
+CRUD operation using post_tag model.
+
+
+CRUD operation using post_meta model.
+
+
+CRUD operation using category model.
+
+
+CRUD operation using post_category model.
+
+
+
+
+
